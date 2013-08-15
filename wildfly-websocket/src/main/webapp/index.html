@@ -14,7 +14,12 @@
 -->
 <style type="text/css">
 .sets {
-   background-color: #e5E5E5;
+	background-color: #e5E5E5;
+}
+
+.serve {
+	color: yellow;
+	background-color: #ccc
 }
 </style>
 <script type="text/javascript">
@@ -39,6 +44,7 @@
     	  g1p1set1 =  document.getElementById("g1-p1-set1");
     	  g1p1set2 =  document.getElementById("g1-p1-set2");
     	  g1p1set3 =  document.getElementById("g1-p1-set3");
+    	  g1p1service = document.getElementById("g1-p1-service");
           //player2
           g1p2 =  document.getElementById("g1-p2");
           g1p2games =  document.getElementById("g1-p2-games");
@@ -47,6 +53,7 @@
           g1p2set1 =  document.getElementById("g1-p2-set1");
           g1p2set2 =  document.getElementById("g1-p2-set2");
           g1p2set3 =  document.getElementById("g1-p2-set3");
+          g1p2service = document.getElementById("g1-p2-service");
           //comments
           g1comments =  document.getElementById("g1-comments");
       }
@@ -70,6 +77,12 @@
         	                     	//comments
         	                       g1comments.value = obj.match.comments;
         	                       g1comments.scrollTop = 999999;
+        	                       //service
+        	                       //if (obj.match.service === "player1"){
+        	                    	   g1p1service.innerHTML = "◉";
+            	                  // } else {
+            	                	//   g1p2service.innerHTML = "◉";
+            	                   //}
         	                       //player1
         	                       g1p1.innerHTML = obj.match.players[0].name;
         	                       g1p1games.innerHTML = obj.match.players[0].games;
@@ -108,58 +121,69 @@
 <body>
 	<div class="container">
 		<h2>Tennis Game Tournament - Java API for Websocket</h2>
-		<p class="lead">Basic HTML5 sample to illustrate the new Java API for 
-			WebSocket (JSR 356).</p>
+		<p class="lead">Basic HTML5 sample to illustrate the new Java API
+			for WebSocket (JSR 356).</p>
+			<button type="button" class="btn btn-primary btn-sm">Federer Wins ?</button>
 
 		<div class="row">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					Match 1 <span id="g1-status" class="label label-danger"></span>
 				</div>
-				<div class="bs-docs-section">
-					<div class="bs-callout bs-callout-warning">
-						<textarea id="g1-comments" cols="120" rows="3"></textarea>
-					</div>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th width="5%">S1</th>
-							<th width="5%">S2</th>
-							<th width="5%">S3</th>
-							<th width="5%" class="active"></th>
-							<th width="50%" class="active">PLAYERS</th>
-							<th width="10%" class="active" >POINTS</th>
-							<th width="10%" class="active">GAMES</th>
-							<th width="10%" class="active">SETS</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="sets"><span id="g1-p1-set1" class="label label-warning">0</span></td>
-							<td class="sets"><span id="g1-p1-set2" class="label label-warning">0</span></td>
-							<td class="sets"><span id="g1-p1-set3" class="label label-warning">0</span></td>
-							<td></td>
-							<td id="g1-p1"></td>
-							<td  class="active"><span id="g1-p1-points" class="label label-danger">-</span></td>
-							<td id="g1-p1-games">0</td>
-							<td id="g1-p1-sets"></td>
-						</tr>
-						<tr>
-							<td class="sets"><span id="g1-p2-set1" class="label label-warning">0</span></td>
-							<td class="sets"><span id="g1-p2-set2" class="label label-warning">0</span></td>
-							<td class="sets"><span id="g1-p2-set3" class="label label-warning">0</span></td>
-							<td></td>
-							<td id="g1-p2"></td>
-							<td  class="active"><span id="g1-p2-points" class="label label-danger">-</span></td>
-							<td id="g1-p2-games">0</td>
-							<td id="g1-p2-sets"></td>
-						</tr>
-					</tbody>
-				</table>
-
+				<div>
+				<!-- Indicates a successful or positive action -->
+				<p>
+					<button type="button" class="btn btn-primary btn-sm">Federer Wins ?</button>
+					<textarea id="g1-comments" cols="120" rows="3"></textarea>
+				</p>
 			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="5%">S1</th>
+						<th width="5%">S2</th>
+						<th width="5%">S3</th>
+						<th width="5%" class="active"></th>
+						<th width="50%" class="active">PLAYERS</th>
+						<th width="10%" class="active">POINTS</th>
+						<th width="10%" class="active">GAMES</th>
+						<th width="10%" class="active">SETS</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="sets"><span id="g1-p1-set1"
+							class="label label-warning">0</span></td>
+						<td class="sets"><span id="g1-p1-set2"
+							class="label label-warning">0</span></td>
+						<td class="sets"><span id="g1-p1-set3"
+							class="label label-warning">0</span></td>
+						<td><span id="g1-p1-service" class="badge serve"></span></td>
+						<td id="g1-p1"></td>
+						<td class="active"><span id="g1-p1-points"
+							class="label label-danger">-</span></td>
+						<td id="g1-p1-games">0</td>
+						<td id="g1-p1-sets"></td>
+					</tr>
+					<tr>
+						<td class="sets"><span id="g1-p2-set1"
+							class="label label-warning">0</span></td>
+						<td class="sets"><span id="g1-p2-set2"
+							class="label label-warning">0</span></td>
+						<td class="sets"><span id="g1-p2-set3"
+							class="label label-warning">0</span></td>
+						<td><span id="g1-p2-service" class="badge serve"></span></td>
+						<td id="g1-p2"></td>
+						<td class="active"><span id="g1-p2-points"
+							class="label label-danger">-</span></td>
+						<td id="g1-p2-games">0</td>
+						<td id="g1-p2-sets"></td>
+					</tr>
+				</tbody>
+			</table>
+
 		</div>
+	</div>
 	</div>
 </body>
 </html>
