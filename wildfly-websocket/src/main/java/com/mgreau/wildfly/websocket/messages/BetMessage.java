@@ -9,8 +9,15 @@ package com.mgreau.wildfly.websocket.messages;
 
 public class BetMessage {
 	
-	public BetMessage(){
-		
+	private String winner;
+	
+	public BetMessage(String winner){
+		this.winner = winner;
+	}
+	
+	
+	public String getWinner(){
+		return winner;
 	}
     
 	public String toString(){

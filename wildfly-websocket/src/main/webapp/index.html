@@ -22,108 +22,13 @@
 	background-color: #ccc
 }
 </style>
-<script type="text/javascript">
-      var host = "ws://localhost:8080/matchpoint/games/game1";
-      var socket; //websocket
-      var g1comments; //Game1 comments
-      //Player1 elements
-      var g1p1, g1p1games, g1p1sets, g1p1points, g1p1set1, g1p1set2, g1p1set3; 
-      //Player2 elements
-      var g1p2, g1p2games, g1p2sets, g1p2points, g1p2set1, g1p2set2, g1p2set3; 
-      
-      function connect() {
-    	  iniHtmlElements();
-          createWebSocket(host);
-      }
 
-      function iniHtmlElements(){
-    	  g1p1 =  document.getElementById("g1-p1");
-    	  g1p1games =  document.getElementById("g1-p1-games")
-          g1p1sets =  document.getElementById("g1-p1-sets");
-    	  g1p1points =  document.getElementById("g1-p1-points");
-    	  g1p1set1 =  document.getElementById("g1-p1-set1");
-    	  g1p1set2 =  document.getElementById("g1-p1-set2");
-    	  g1p1set3 =  document.getElementById("g1-p1-set3");
-    	  g1p1service = document.getElementById("g1-p1-service");
-          //player2
-          g1p2 =  document.getElementById("g1-p2");
-          g1p2games =  document.getElementById("g1-p2-games");
-          g1p2sets =  document.getElementById("g1-p2-sets");
-          g1p2points =  document.getElementById("g1-p2-points");
-          g1p2set1 =  document.getElementById("g1-p2-set1");
-          g1p2set2 =  document.getElementById("g1-p2-set2");
-          g1p2set3 =  document.getElementById("g1-p2-set3");
-          g1p2service = document.getElementById("g1-p2-service");
-          //comments
-          g1comments =  document.getElementById("g1-comments");
-      }
-     
-      function createWebSocket(host) {
-             if(!window.WebSocket) {
-            	 var spanError = document.createElement('span');
-            	 spanError.setAttribute('class', 'alert alert-danger');
-            	 spanError.innerHTML = "Votre navigateur ne supporte pas les WebSockets!";
-             	 document.body.appendChild(spanError);
-                  return false;
-             } else {
-                     socket = new WebSocket(host);
-                     socket.onopen = function() { document.getElementById("g1-status").innerHTML = 'LIVE'; }
-                     socket.onclose = function() { document.getElementById("g1-status").innerHTML = 'FINISHED';  }
-                     socket.onerror = function() { document.getElementById("g1-status").innerHTML = 'ERROR';  }
-                     socket.onmessage = function(msg){
-                             try { //tente de parser data
-        					       console.log(data);
-        	                       var obj = JSON.parse(msg.data);
-        	                     	//comments
-        	                       g1comments.value = obj.match.comments;
-        	                       g1comments.scrollTop = 999999;
-        	                       //service
-        	                       //if (obj.match.service === "player1"){
-        	                    	   g1p1service.innerHTML = "◉";
-            	                  // } else {
-            	                	//   g1p2service.innerHTML = "◉";
-            	                   //}
-        	                       //player1
-        	                       g1p1.innerHTML = obj.match.players[0].name;
-        	                       g1p1games.innerHTML = obj.match.players[0].games;
-        	                       g1p1sets.innerHTML = obj.match.players[0].sets;
-        	                       g1p1points.innerHTML = obj.match.players[0].points;
-        	                       g1p1set1.innerHTML = obj.match.players[0].set1;
-        	                       g1p1set2.innerHTML = obj.match.players[0].set2;
-        	                       g1p1set3.innerHTML = obj.match.players[0].set3;
-        	                       //player2
-        	                       g1p2.innerHTML = obj.match.players[1].name;
-        	                       g1p2games.innerHTML = obj.match.players[1].games;
-        	                       g1p2sets.innerHTML = obj.match.players[1].sets;
-        	                       g1p2points.innerHTML = obj.match.players[1].points;
-        	                       g1p2set1.innerHTML = obj.match.players[1].set1;
-        	                       g1p2set2.innerHTML = obj.match.players[1].set2;
-        	                       g1p2set3.innerHTML = obj.match.players[1].set3;
-        	                       
-                             } catch(exception) {
-                                     data = msg.data
-                                     console.log(data);
-                             }      
-                             
-                       }
-             }
-      }
-      function sendMessage(message) {
-             if(typeof data == 'object') { // si data est un objet on le change en chaine
-                     data = JSON.stringify(data);
-             }
-             socket.send(data);
-      }
-
-      window.addEventListener("load", connect, false);
-  </script>
 </head>
 <body>
 	<div class="container">
 		<h2>Tennis Game Tournament - Java API for Websocket</h2>
 		<p class="lead">Basic HTML5 sample to illustrate the new Java API
 			for WebSocket (JSR 356).</p>
-			<button type="button" class="btn btn-primary btn-sm">Federer Wins ?</button>
 
 		<div class="row">
 			<div class="panel panel-primary">
@@ -131,59 +36,80 @@
 					Match 1 <span id="g1-status" class="label label-danger"></span>
 				</div>
 				<div>
-				<!-- Indicates a successful or positive action -->
-				<p>
-					<button type="button" class="btn btn-primary btn-sm">Federer Wins ?</button>
+					<!-- Indicates a successful or positive action -->
+					<p>
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="input-group">
+								<span class="input-group-addon"> <input
+									name="macthbetting" type="radio" onclick="sendMessage('Nadal')">
+								</span> <input type="text" class="form-control" value="Nadal wins ?">
+							</div>
+							<!-- /input-group -->
+						</div>
+						<!-- /.col-lg-6 -->
+						<div class="col-lg-3">
+							<div class="input-group">
+								<span class="input-group-addon"> <input
+									name="macthbetting" type="radio"
+									onclick="sendMessage('Federer')">
+								</span> <input type="text" class="form-control" value="Federer wins ?">
+							</div>
+							<!-- /input-group -->
+						</div>
+						<!-- /.col-lg-6 -->
+					</div>
+					<!-- /.row -->
 					<textarea id="g1-comments" cols="120" rows="3"></textarea>
-				</p>
+					</p>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th width="5%">S1</th>
+							<th width="5%">S2</th>
+							<th width="5%">S3</th>
+							<th width="5%" class="active"></th>
+							<th width="50%" class="active">PLAYERS</th>
+							<th width="10%" class="active">POINTS</th>
+							<th width="10%" class="active">GAMES</th>
+							<th width="10%" class="active">SETS</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="sets"><span id="g1-p1-set1"
+								class="label label-warning">0</span></td>
+							<td class="sets"><span id="g1-p1-set2"
+								class="label label-warning">0</span></td>
+							<td class="sets"><span id="g1-p1-set3"
+								class="label label-warning">0</span></td>
+							<td><span id="g1-p1-service" class="badge serve"></span></td>
+							<td id="g1-p1"></td>
+							<td class="active"><span id="g1-p1-points"
+								class="label label-danger">-</span></td>
+							<td id="g1-p1-games">0</td>
+							<td id="g1-p1-sets"></td>
+						</tr>
+						<tr>
+							<td class="sets"><span id="g1-p2-set1"
+								class="label label-warning">0</span></td>
+							<td class="sets"><span id="g1-p2-set2"
+								class="label label-warning">0</span></td>
+							<td class="sets"><span id="g1-p2-set3"
+								class="label label-warning">0</span></td>
+							<td><span id="g1-p2-service" class="badge serve"></span></td>
+							<td id="g1-p2"></td>
+							<td class="active"><span id="g1-p2-points"
+								class="label label-danger">-</span></td>
+							<td id="g1-p2-games">0</td>
+							<td id="g1-p2-sets"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th width="5%">S1</th>
-						<th width="5%">S2</th>
-						<th width="5%">S3</th>
-						<th width="5%" class="active"></th>
-						<th width="50%" class="active">PLAYERS</th>
-						<th width="10%" class="active">POINTS</th>
-						<th width="10%" class="active">GAMES</th>
-						<th width="10%" class="active">SETS</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="sets"><span id="g1-p1-set1"
-							class="label label-warning">0</span></td>
-						<td class="sets"><span id="g1-p1-set2"
-							class="label label-warning">0</span></td>
-						<td class="sets"><span id="g1-p1-set3"
-							class="label label-warning">0</span></td>
-						<td><span id="g1-p1-service" class="badge serve"></span></td>
-						<td id="g1-p1"></td>
-						<td class="active"><span id="g1-p1-points"
-							class="label label-danger">-</span></td>
-						<td id="g1-p1-games">0</td>
-						<td id="g1-p1-sets"></td>
-					</tr>
-					<tr>
-						<td class="sets"><span id="g1-p2-set1"
-							class="label label-warning">0</span></td>
-						<td class="sets"><span id="g1-p2-set2"
-							class="label label-warning">0</span></td>
-						<td class="sets"><span id="g1-p2-set3"
-							class="label label-warning">0</span></td>
-						<td><span id="g1-p2-service" class="badge serve"></span></td>
-						<td id="g1-p2"></td>
-						<td class="active"><span id="g1-p2-points"
-							class="label label-danger">-</span></td>
-						<td id="g1-p2-games">0</td>
-						<td id="g1-p2-sets"></td>
-					</tr>
-				</tbody>
-			</table>
-
 		</div>
 	</div>
-	</div>
+	<script src="websocket.js"></script>
 </body>
 </html>

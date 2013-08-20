@@ -51,7 +51,7 @@ public class GameEndpoint {
     
     @OnMessage
     public void message(final Session session, BetMessage msg) {
-        logger.log(Level.INFO, "Received: {0}", msg.toString());
+        logger.log(Level.INFO, "Received: {0}", msg.getWinner());
     }
 
     @OnOpen

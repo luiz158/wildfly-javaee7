@@ -42,8 +42,8 @@ public class MessageDecoder implements Decoder.Text<BetMessage> {
         BetMessage msg = null;
         if (willDecode(string)) {
             switch (messageMap.get("type")) {
-                case "join":
-                    //msg = new JoinMessage(messageMap.get("name"));
+                case "bet":
+                    msg = new BetMessage(messageMap.get("name"));
                     break;
                 case "chat":
                     //msg = new ChatMessage(messageMap.get("name"),
@@ -76,7 +76,7 @@ public class MessageDecoder implements Decoder.Text<BetMessage> {
         Set keys = messageMap.keySet();
         if (keys.contains("type")) {
             switch (messageMap.get("type")) {
-                case "join":
+                case "bet":
                     if (keys.contains("name"))
                         decodes = true;
                     break;
