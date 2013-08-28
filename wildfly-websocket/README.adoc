@@ -2,12 +2,9 @@
 Maxime Gréaun <@mgreau>
 :imagesdir: ../
 
-This project demonstrates the use of the https://github.com/asciidoctor/asciidoctor-java-integration[Asciidoctor Java integration] library in a Servlet.
-The integration is bootstrapped and configured in an application-scoped CDI bean.
-The Servlet then invokes that bean to render the AsciiDoc source submitted from a web form.
+This project demonstrates the use of the WebSocket Java EE 7 specification
 
-All of the functionality is tested by http://arquillian.org[Arquillian].
 
 == Screenshot
 
-image::asciidoctor-servlet-form.png[Screenshot of the Asciidoctor Servlet demo]
+image::ht;l%6zebsocket.png[Screenshot of the WebSocket Java EE 7 demo]
