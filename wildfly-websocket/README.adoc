@@ -7,4 +7,4 @@ This project demonstrates the use of the WebSocket Java EE 7 specification
 
 == Screenshot
 
-image::ht;l%6zebsocket.png[Screenshot of the WebSocket Java EE 7 demo]
+image::html5_websocket.png[Screenshot of the WebSocket Java EE 7 demo]
