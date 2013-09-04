@@ -31,6 +31,8 @@ public class TennisMatch {
 	private boolean isSet2Finished = false;
 	private boolean isSet3Finished = false;
 	
+	private String serve = "player1";
+	
 	private StringBuffer liveComments = new StringBuffer() ;
 
 	public String getPlayerOneName() {
@@ -45,7 +47,7 @@ public class TennisMatch {
 		this.key = key;
 		this.p1Name = playerOneName;
 		this.p2Name = playerTwoName;
-		liveComments.append("Welcome to the match between " + p1Name + " and " + p2Name + ".");
+		liveComments.append("Welcome to this match between " + p1Name + " and " + p2Name + ".");
 	}
 
 	public String getKey() {
@@ -63,17 +65,17 @@ public class TennisMatch {
 		p1GamesInCurrentSet = p2GamesInCurrentSet = 0;
 		isSet1Finished = isSet2Finished = isSet3Finished = false;
 		liveComments = new StringBuffer();
-		liveComments.append("Welcome to the match between " + p1Name + " and " + p2Name + ".");
+		liveComments.append("Welcome to this match between " + p1Name + " and " + p2Name + ".");
 	}
 
 	public String getPlayer1Score() {
 		if (hasAdvantage() && p1Points > p2Points) {
 			addLiveComments("Advantage " + playerWithHighestScore());
-			return "A";
+			return "AD";
 		}
 		if (isDeuce()){
 			addLiveComments("Deuce");
-			return "E";
+			return "40";
 		}
 		return translateScore(p1Points);
 	}
@@ -81,10 +83,10 @@ public class TennisMatch {
 	public String getPlayer2Score() {
 		if (hasAdvantage() && p2Points > p1Points) {
 			addLiveComments("Advantage " + playerWithHighestScore());
-			return "A";
+			return "AD";
 		}
 		if (isDeuce()){
-			return "E";
+			return "40";
 		}
 		return translateScore(p2Points);
 	}
@@ -128,6 +130,11 @@ public class TennisMatch {
 		if (hasGameWinner){
 			addLiveComments("Game " + playerWithHighestScore());
 			p2Points = p1Points = 0;
+			if ("player1".equals(serve)){
+				serve="player2";
+			} else {
+				serve="player1";
+			}
 		}
 		return hasGameWinner;
 	}
@@ -285,5 +292,13 @@ public class TennisMatch {
 
 	public int getP2GamesInCurrentSet() {
 		return p2GamesInCurrentSet;
+	}
+
+	public String getServe() {
+		return serve;
+	}
+
+	public void setServe(String serve) {
+		this.serve = serve;
 	}
 }

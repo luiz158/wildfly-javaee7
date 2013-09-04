@@ -46,6 +46,7 @@ public class MatchMessageEncoder implements Encoder.Text<MatchMessage> {
         	builder.add("bet", "Player x wins!")
         	.add("match", Json.createObjectBuilder()
             			.add("comments",m.getMatch().getLiveComments())
+            			.add("serve", m.getMatch().getServe())
             			.add("players", Json.createArrayBuilder()
         					 .add(Json.createObjectBuilder()
         							.add("name", m.getMatch().getPlayerOneName())

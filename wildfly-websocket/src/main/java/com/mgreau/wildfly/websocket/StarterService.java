@@ -22,7 +22,7 @@ public class StarterService {
     /* Use the container's timer service */
     @Resource TimerService tservice;
     private Random random;
-    private Set<TennisMatch> games;
+    private Set<TennisMatch> matches;
     
     private static final Logger logger = Logger.getLogger("StarterService");
     
@@ -30,21 +30,21 @@ public class StarterService {
     public void init() {
         logger.log(Level.INFO, "Initializing EJB.");
         random = new Random();
-        games = new LinkedHashSet<>();
-        games.add(new TennisMatch("game1", "Federer", "Nadal"));
-        games.add(new TennisMatch("game2", "Tsonga", "Djoko"));
+        matches = new LinkedHashSet<>();
+        matches.add(new TennisMatch("1234", "Federer", "Nadal"));
+        matches.add(new TennisMatch("4444", "Tsonga", "Djoko"));
     }
     
     @Schedule(second="*/3", minute="*",hour="*", persistent=false)
     public void play() {
     	logger.log(Level.INFO, "------- Play 1 point -----------");
-    	for (TennisMatch g : games){
+    	for (TennisMatch g : matches){
     		if (random.nextInt(2) == 1){
         		g.playerOneScores();
         	} else {
         		g.playerTwoScores();
         	}
-        	GameEndpoint.send(new MatchMessage(g), g.getKey());
+        	MatchEndpoint.send(new MatchMessage(g), g.getKey());
         	//if there is a winner, send result and reset the game
         	if (g.hasMatchWinner()){
         		g.reset();

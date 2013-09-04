@@ -22,22 +22,22 @@ import com.mgreau.wildfly.websocket.messages.MatchMessage;
 import com.mgreau.wildfly.websocket.messages.Message;
 
 @ServerEndpoint(
-		value = "/games/{game-id}",
+		value = "/matches/{match-id}",
 		        decoders = { MessageDecoder.class }, 
 		        encoders = { MatchMessageEncoder.class }
 		)
-public class GameEndpoint {
+public class MatchEndpoint {
 	
-	private static final Logger logger = Logger.getLogger("GameEndpoint");
+	private static final Logger logger = Logger.getLogger("MatchEndpoint");
 	
     /* Queue for all open WebSocket sessions */
     static Queue<Session> queue = new ConcurrentLinkedQueue<>();
     
-    public static void send(MatchMessage msg, String gameId) {
+    public static void send(MatchMessage msg, String matchId) {
         try {
             /* Send updates to all open WebSocket sessions for this match */
             for (Session session : queue) {
-            	if (Boolean.TRUE.equals(session.getUserProperties().get(gameId))){
+            	if (Boolean.TRUE.equals(session.getUserProperties().get(matchId))){
             		if (session.isOpen()){
 	            		session.getBasicRemote().sendObject(msg);
 	                    logger.log(Level.INFO, "Score Sent: {0}", msg);
@@ -55,7 +55,7 @@ public class GameEndpoint {
     }
 
     @OnOpen
-    public void openConnection(Session session, @PathParam("game-id") String gameId) {
+    public void openConnection(Session session, @PathParam("match-id") String gameId) {
         /* Register this connection in the queue */
         queue.add(session);
         session.getUserProperties().put(gameId, true);

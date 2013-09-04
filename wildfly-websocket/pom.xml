@@ -41,7 +41,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>matchpoint</finalName>
+		<finalName>usopen</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

@@ -1,4 +1,4 @@
-  var host = "ws://localhost:8080/matchpoint/games/game1";
+  var host = "ws://localhost:8080/usopen/matches/1234";
       var socket; //websocket
       var g1comments; //Game1 comments
       //Player1 elements
@@ -19,7 +19,7 @@
     	  g1p1set1 =  document.getElementById("g1-p1-set1");
     	  g1p1set2 =  document.getElementById("g1-p1-set2");
     	  g1p1set3 =  document.getElementById("g1-p1-set3");
-    	  g1p1service = document.getElementById("g1-p1-service");
+    	  g1p1serve = document.getElementById("g1-p1-serve");
           //player2
           g1p2 =  document.getElementById("g1-p2");
           g1p2games =  document.getElementById("g1-p2-games");
@@ -28,7 +28,7 @@
           g1p2set1 =  document.getElementById("g1-p2-set1");
           g1p2set2 =  document.getElementById("g1-p2-set2");
           g1p2set3 =  document.getElementById("g1-p2-set3");
-          g1p2service = document.getElementById("g1-p2-service");
+          g1p2serve = document.getElementById("g1-p2-serve");
           //comments
           g1comments =  document.getElementById("g1-comments");
       }
@@ -44,7 +44,7 @@
                      socket = new WebSocket(host);
                      socket.onopen = function() { document.getElementById("g1-status").innerHTML = 'LIVE'; }
                      socket.onclose = function() { document.getElementById("g1-status").innerHTML = 'FINISHED';  }
-                     socket.onerror = function() { document.getElementById("g1-status").innerHTML = 'ERROR';  }
+                     socket.onerror = function() { document.getElementById("g1-status").innerHTML = 'ERROR - RETRY';  }
                      socket.onmessage = function(msg){
                              try { //tente de parser data
         					       console.log(data);
@@ -52,12 +52,14 @@
         	                     	//comments
         	                       g1comments.value = obj.match.comments;
         	                       g1comments.scrollTop = 999999;
-        	                       //service
-        	                       //if (obj.match.service === "player1"){
-        	                    	   g1p1service.innerHTML = "◉";
-            	                  // } else {
-            	                	//   g1p2service.innerHTML = "◉";
-            	                   //}
+        	                       //serve
+        	                       if (obj.match.serve === "player1"){
+        	                    	   g1p1serve.innerHTML = "S";
+        	                    	   g1p2serve.innerHTML = "";
+            	                  } else {
+            	                	  g1p1serve.innerHTML = "";
+            	                	  g1p2serve.innerHTML = "S";
+            	                  }
         	                       //player1
         	                       g1p1.innerHTML = obj.match.players[0].name;
         	                       g1p1games.innerHTML = obj.match.players[0].games;
