@@ -24,7 +24,7 @@ public class MatchMessage extends Message {
 	/* For logging purposes */
 	@Override
 	public String toString() {
-		return "[MatchMessage] " + match.getKey() + "-"
+		return "[MatchMessage] " + match.getKey() + "-" + match.getTitle() + "-"
 				+ match.getPlayerOneName() + "-" + match.getPlayerTwoName();
 	}
 

@@ -31,29 +31,27 @@ public class StarterService {
         logger.log(Level.INFO, "Initializing EJB.");
         random = new Random();
         matches = new LinkedHashSet<>();
-        matches.add(new TennisMatch("1234", "Federer", "Nadal"));
-        matches.add(new TennisMatch("4444", "Tsonga", "Djoko"));
+        matches.add(new TennisMatch("1234", "US OPEN - FINAL", "N. DJOKOVIC", "R. NADAL"));
     }
     
     @Schedule(second="*/3", minute="*",hour="*", persistent=false)
     public void play() {
-    	logger.log(Level.INFO, "------- Play 1 point -----------");
-    	for (TennisMatch g : matches){
+    	for (TennisMatch m : matches){
+    		if (m.hasMatchWinner()){
+    			m.reset();
+    			logger.log(Level.INFO, "------- RESET MATCH -----------");
+    		}
+        	logger.log(Level.INFO, "------- 1 point -----------");
     		if (random.nextInt(2) == 1){
-        		g.playerOneScores();
+        		m.playerOneScores();
         	} else {
-        		g.playerTwoScores();
+        		m.playerTwoScores();
         	}
-        	MatchEndpoint.send(new MatchMessage(g), g.getKey());
+        	MatchEndpoint.send(new MatchMessage(m), m.getKey());
         	//if there is a winner, send result and reset the game
-        	if (g.hasMatchWinner()){
-        		g.reset();
-        		logger.log(Level.INFO, "------- RESET Game -----------");
-        		try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					logger.log(Level.INFO, "------- Starting a new Game -----------");
-				}
+        	if (m.hasMatchWinner()){
+        		MatchEndpoint.sendBetResult(m.playerWithHighestSets(), m.getKey());
+        		logger.log(Level.INFO, "------- MATCH FINISHED -----------");
         	}
     	}
     }

@@ -2,13 +2,10 @@ package com.mgreau.wildfly.websocket;
 
 import java.util.Calendar;
 
-/**
- * 
- * 
- */
 public class TennisMatch {
 
 	private String key;
+	private String title;
 	
 	private String p2Name;
 	private String p1Name;
@@ -43,8 +40,9 @@ public class TennisMatch {
 		return p2Name;
 	}
 
-	public TennisMatch(String key, String playerOneName, String playerTwoName) {
+	public TennisMatch(String key, String title, String playerOneName, String playerTwoName) {
 		this.key = key;
+		this.title = title;
 		this.p1Name = playerOneName;
 		this.p2Name = playerTwoName;
 		liveComments.append("Welcome to this match between " + p1Name + " and " + p2Name + ".");
@@ -110,13 +108,21 @@ public class TennisMatch {
 			return p2Name;
 		}
 	}
+	
+	public String playerWithHighestSets() {
+		if (p1Sets > p2Sets) {
+			return p1Name;
+		} else {
+			return p2Name;
+		}
+	}
 
 	public boolean hasMatchWinner() {
 		if (isSet1Finished && isSet2Finished && (isSet3Finished || p1Sets != p2Sets))
 			return true;
 		return false;
 	}
-
+	
 	public boolean hasGameWinner() {
 		boolean hasGameWinner = false;
 		if (p2Points >= 4 && p2Points >= p1Points + 2) {
@@ -300,5 +306,13 @@ public class TennisMatch {
 
 	public void setServe(String serve) {
 		this.serve = serve;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

@@ -7,9 +7,11 @@
  */
 package com.mgreau.wildfly.websocket.messages;
 
-public class BetMessage {
+public class BetMessage extends Message {
 	
 	private String winner;
+	
+	private String result;
 	
 	public BetMessage(String winner){
 		this.winner = winner;
@@ -22,5 +24,15 @@ public class BetMessage {
     
 	public String toString(){
 		return "[BetMessage] ...";
+	}
+
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

@@ -42,13 +42,9 @@ public class MessageDecoder implements Decoder.Text<BetMessage> {
         BetMessage msg = null;
         if (willDecode(string)) {
             switch (messageMap.get("type")) {
-                case "bet":
+                case "betMatchWinner":
                     msg = new BetMessage(messageMap.get("name"));
                     break;
-                case "chat":
-                    //msg = new ChatMessage(messageMap.get("name"),
-                           //               messageMap.get("target"),
-                             //             messageMap.get("message"));
             }
         } else {
             throw new DecodeException(string, "[Message] Can't decode.");
@@ -76,13 +72,8 @@ public class MessageDecoder implements Decoder.Text<BetMessage> {
         Set keys = messageMap.keySet();
         if (keys.contains("type")) {
             switch (messageMap.get("type")) {
-                case "bet":
+                case "betMatchWinner":
                     if (keys.contains("name"))
-                        decodes = true;
-                    break;
-                case "chat":
-                    String[] chatMsgKeys = {"name", "target", "message"};
-                    if (keys.containsAll(Arrays.asList(chatMsgKeys)))
                         decodes = true;
                     break;
             }
